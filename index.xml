@@ -6,9 +6,18 @@
     <description>Recent content on Kiwiyumi</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 11 Jun 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://main--test-kiwi.netlify.app/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 21 Jun 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://main--test-kiwi.netlify.app/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>TrakSYS - CVE-2024-6188 - Direct access to export Source Code</title>
+      <title>TrakSYS - Direct and unauthenticated access to export Pages funcionality</title>
+      <link>https://main--test-kiwi.netlify.app/post/tracksys-export-source-code-02/</link>
+      <pubDate>Fri, 21 Jun 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://main--test-kiwi.netlify.app/post/tracksys-export-source-code-02/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>TrakSYS - CVE-2024-6188 - Direct and unauthenticated access to export Source Code</title>
       <link>https://main--test-kiwi.netlify.app/post/tracksys-export-source-code/</link>
       <pubDate>Tue, 11 Jun 2024 00:00:00 +0000</pubDate>
       
@@ -44,7 +53,7 @@
     </item>
     
     <item>
-      <title>Joomla 4.2.7 - Information Disclosure - CVE-2023-23752</title>
+      <title>Joomla 4.2.7 - CVE-2023-23752 - Information Disclosure</title>
       <link>https://main--test-kiwi.netlify.app/post/joomla-information-disclosure-cve-2023-23752/</link>
       <pubDate>Sat, 03 Feb 2024 00:00:00 +0000</pubDate>
       

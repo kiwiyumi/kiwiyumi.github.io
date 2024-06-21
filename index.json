@@ -9,8 +9,18 @@
   
   
     {
+      "id": "https://main--test-kiwi.netlify.app/post/tracksys-export-source-code-02/",
+      "title": "TrakSYS - Direct and unauthenticated access to export Pages funcionality",
+      "content_text": "",
+      "url": "https://main--test-kiwi.netlify.app/post/tracksys-export-source-code-02/",
+      "date_published": "2024-06-21 00:00:00 +0000 UTC",
+      "tags": ["Web,CVE,CMS"]
+    }
+  
+  , 
+    {
       "id": "https://main--test-kiwi.netlify.app/post/tracksys-export-source-code/",
-      "title": "TrakSYS - CVE-2024-6188 - Direct access to export Source Code",
+      "title": "TrakSYS - CVE-2024-6188 - Direct and unauthenticated access to export Source Code",
       "content_text": "",
       "url": "https://main--test-kiwi.netlify.app/post/tracksys-export-source-code/",
       "date_published": "2024-06-11 00:00:00 +0000 UTC",
@@ -50,7 +60,7 @@
   , 
     {
       "id": "https://main--test-kiwi.netlify.app/post/joomla-information-disclosure-cve-2023-23752/",
-      "title": "Joomla 4.2.7 - Information Disclosure - CVE-2023-23752",
+      "title": "Joomla 4.2.7 - CVE-2023-23752 - Information Disclosure",
       "content_text": "",
       "url": "https://main--test-kiwi.netlify.app/post/joomla-information-disclosure-cve-2023-23752/",
       "date_published": "2024-02-03 00:00:00 +0000 UTC",

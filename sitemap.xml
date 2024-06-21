@@ -3,24 +3,27 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://main--test-kiwi.netlify.app/tags/cms/</loc>
-    <lastmod>2024-06-11T00:00:00+00:00</lastmod>
+    <lastmod>2024-06-21T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://main--test-kiwi.netlify.app/tags/cve/</loc>
-    <lastmod>2024-06-11T00:00:00+00:00</lastmod>
+    <lastmod>2024-06-21T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://main--test-kiwi.netlify.app/</loc>
-    <lastmod>2024-06-11T00:00:00+00:00</lastmod>
+    <lastmod>2024-06-21T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://main--test-kiwi.netlify.app/posts/</loc>
-    <lastmod>2024-06-11T00:00:00+00:00</lastmod>
+    <lastmod>2024-06-21T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://main--test-kiwi.netlify.app/tags/</loc>
-    <lastmod>2024-06-11T00:00:00+00:00</lastmod>
+    <lastmod>2024-06-21T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://main--test-kiwi.netlify.app/post/tracksys-export-source-code/</loc>
-    <lastmod>2024-06-11T00:00:00+00:00</lastmod>
+    <loc>https://main--test-kiwi.netlify.app/post/tracksys-export-source-code-02/</loc>
+    <lastmod>2024-06-21T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://main--test-kiwi.netlify.app/tags/web/</loc>
+    <lastmod>2024-06-21T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://main--test-kiwi.netlify.app/post/tracksys-export-source-code/</loc>
     <lastmod>2024-06-11T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://main--test-kiwi.netlify.app/post/abusing-apache-misconfiguration-privilege-escalation/</loc>

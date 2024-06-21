@@ -5,7 +5,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="shortcut icon" href="https://main--test-kiwi.netlify.appassets/favicon.ico" type="image/x-icon">
-  <title>TrakSYS - CVE-2024-6188 - Direct and unauthenticated access to export Source Code | Kiwiyumi</title>
+  <title>TrakSYS - Direct and unauthenticated access to export Pages funcionality | Kiwiyumi</title>
   <link rel="stylesheet" href="https://main--test-kiwi.netlify.appassets/css/post.css" />
   <script defer src="https://main--test-kiwi.netlify.appassets/js/lbox.js"></script>
   
@@ -19,8 +19,8 @@
 
       <section class="article">
         <div class="article-header">
-          <h2 class="article-title">TrakSYS - CVE-2024-6188 - Direct and unauthenticated access to export Source Code</h2>
-          <small class="date">Tue Jun 11, 2024</small>
+          <h2 class="article-title">TrakSYS - Direct and unauthenticated access to export Pages funcionality</h2>
+          <small class="date">Fri Jun 21, 2024</small>
           <div class="tags">
             
             <a href="https://main--test-kiwi.netlify.apptags/Web" class="tag">Web</a>
@@ -36,28 +36,28 @@
 <h2 id="versions-affected">Versions affected</h2>
 <p>During my tests it was observed that versions 11.x.x are vulnerable.</p>
 <h2 id="affected-endpoint">Affected Endpoint</h2>
-<p>https://site[.]com/TS/export/pagedefinition?ID={id}</p>
+<p>https://site[.]com/TS/export/contentpage?ID={id}</p>
 <h2 id="impact">Impact</h2>
-<p>An attacker is able to export the source code of the pages without having any credentials to access the application.</p>
+<p>An attacker is able to export the pages code of the pages without having any credentials to access the application.</p>
 <h2 id="description">Description</h2>
 <p>It was not possible to confirm the presence of mechanisms that check whether the user is authorized to carry out certain actions in the system, or whether the user has been authenticated by the application. Because of this, it was possible to export the application&rsquo;s source code.</p>
 <p>The following images illustrate successful unauthenticated requests to the affected endpoint:</p>
-<p><img src="/assets/images/traksys-export-source-code/bc4b5130-8706-48ac-94b2-bb8a5ec868ca.png" alt=""></p>
-<p><img src="/assets/images/traksys-export-source-code/218d3e03-6ea6-4fc7-8586-d5dc6df55275.png" alt=""></p>
+<p><img src="/assets/images/traksys-export-source-code/59bdc23d-92ed-4800-9cdc-728bc211086f.png" alt=""></p>
 <h2 id="recommendation">Recommendation</h2>
 <p>It is strongly recommended that changes be made to the application&rsquo;s existing session management and access control, such that access to sensitive functionalities is available only to to autenticated users, and that these users perform only actions by their authorization profile.</p>
 <h2 id="poc">PoC</h2>
 <ol>
 <li>Do the following request replacing the <strong>ID</strong> with a valid id and host with your target:</li>
 </ol>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-http" data-lang="http"><span style="color:#a6e22e">GET</span> /TS/export/pagedefinition?ID={ID} <span style="color:#66d9ef">HTTP</span><span style="color:#f92672">/</span><span style="color:#ae81ff">1.1</span>
-Host<span style="color:#f92672">:</span> <span style="color:#ae81ff">{HOST}</span>
-
-</code></pre></div><ol start="2">
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-http" data-lang="http"><span style="color:#960050;background-color:#1e0010">GET /TS/export/contentpage?ID={ID} HTTP/2
+</span><span style="color:#960050;background-color:#1e0010">Host: {HOST}
+</span><span style="color:#960050;background-color:#1e0010">
+</span></code></pre></div><ol start="2">
 <li>Note that it is possible to export and view the source code.</li>
 </ol>
-<h3 id="font">Font</h3>
+<h3 id="fonts">Fonts</h3>
 <ul>
+<li>Similar Vulnerability CVE-2024-6188 <a href="https://kiwiyumi.com/post/tracksys-export-source-code/">https://kiwiyumi.com/post/tracksys-export-source-code/</a></li>
 <li><a href="https://cheatsheetseries.owasp.org/cheatsheets/Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html">https://cheatsheetseries.owasp.org/</a></li>
 </ul></div>
       </section>

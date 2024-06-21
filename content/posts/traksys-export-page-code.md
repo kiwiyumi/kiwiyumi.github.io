@@ -1,7 +1,7 @@
 +++
 author = "kiwiyumi"
 date = "2024-06-21"
-description = "Export source code"
+description = "Export page code"
 title = "TrakSYS - Direct and unauthenticated access to export Pages funcionality"
 tags = [
     "Web",

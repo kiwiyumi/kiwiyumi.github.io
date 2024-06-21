@@ -1,0 +1,19 @@
+baseURL = "https://main--test-kiwi.netlify.app"
+languageCode = "en-us"
+title = "Kiwiyumi"
+rssLimit = 20
+minify = false
+
+[Author]
+  name = "kiwiyumi"
+
+[permalinks]
+  posts = "/post/:filename"
+  pages = "/:slug"
+
+[taxonomies]
+  tag = "tags"
+  category = "categories"
+
+[outputs]
+  home = ["html", "json", "rss"]

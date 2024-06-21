@@ -1,0 +1,81 @@
+{
+  "version": "https://jsonfeed.org/version/1",
+  "title": "Kiwiyumi",
+  "home_page_url": "https://main--test-kiwi.netlify.app",
+  "feed_url": "https://main--test-kiwi.netlify.app/",
+
+
+  "items": [
+  
+  
+    {
+      "id": "https://main--test-kiwi.netlify.app/post/tracksys-export-source-code/",
+      "title": "TrakSYS - CVE-2024-6188 - Direct access to export Source Code",
+      "content_text": "",
+      "url": "https://main--test-kiwi.netlify.app/post/tracksys-export-source-code/",
+      "date_published": "2024-06-11 00:00:00 +0000 UTC",
+      "tags": ["Web,CVE,CMS"]
+    }
+  
+  , 
+    {
+      "id": "https://main--test-kiwi.netlify.app/post/abusing-apache-misconfiguration-privilege-escalation/",
+      "title": "Abusing  Apache Misconfiguration - Privilege Escalation",
+      "content_text": "",
+      "url": "https://main--test-kiwi.netlify.app/post/abusing-apache-misconfiguration-privilege-escalation/",
+      "date_published": "2024-05-31 00:00:00 +0000 UTC",
+      "tags": ["privesc,apache,Web-server"]
+    }
+  
+  , 
+    {
+      "id": "https://main--test-kiwi.netlify.app/post/nginx-how-to-create-a-load-balancer/",
+      "title": "NGINX - How to Create a Load Balancer",
+      "content_text": "",
+      "url": "https://main--test-kiwi.netlify.app/post/nginx-how-to-create-a-load-balancer/",
+      "date_published": "2024-03-01 00:00:00 +0000 UTC",
+      "tags": ["Web-server,Infra"]
+    }
+  
+  , 
+    {
+      "id": "https://main--test-kiwi.netlify.app/post/persistence-with-apt/",
+      "title": "Persistence with APT",
+      "content_text": "",
+      "url": "https://main--test-kiwi.netlify.app/post/persistence-with-apt/",
+      "date_published": "2024-02-28 00:00:00 +0000 UTC",
+      "tags": ["post-exploitation,persistence"]
+    }
+  
+  , 
+    {
+      "id": "https://main--test-kiwi.netlify.app/post/joomla-information-disclosure-cve-2023-23752/",
+      "title": "Joomla 4.2.7 - Information Disclosure - CVE-2023-23752",
+      "content_text": "",
+      "url": "https://main--test-kiwi.netlify.app/post/joomla-information-disclosure-cve-2023-23752/",
+      "date_published": "2024-02-03 00:00:00 +0000 UTC",
+      "tags": ["Web,CVE,CMS,Joomla"]
+    }
+  
+  , 
+    {
+      "id": "https://main--test-kiwi.netlify.app/post/dump-and-crancking-firefox-password/",
+      "title": "Dump and Cracking Firefox Passwords",
+      "content_text": "",
+      "url": "https://main--test-kiwi.netlify.app/post/dump-and-crancking-firefox-password/",
+      "date_published": "2024-02-01 00:00:00 +0000 UTC",
+      "tags": ["firefox,post-exploitation"]
+    }
+  
+  , 
+    {
+      "id": "https://main--test-kiwi.netlify.app/post/privilege-escalation-in-systemctl-with-suid/",
+      "title": "Privilege Escalation in Systemctl with SUID",
+      "content_text": "",
+      "url": "https://main--test-kiwi.netlify.app/post/privilege-escalation-in-systemctl-with-suid/",
+      "date_published": "2024-01-23 00:00:00 +0000 UTC",
+      "tags": ["privesc"]
+    }
+  
+  ]
+}

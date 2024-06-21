@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>CMS on Kiwiyumi</title>
+    <link>https://main--test-kiwi.netlify.app/tags/cms/</link>
+    <description>Recent content in CMS on Kiwiyumi</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 11 Jun 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://main--test-kiwi.netlify.app/tags/cms/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>TrakSYS - CVE-2024-6188 - Direct access to export Source Code</title>
+      <link>https://main--test-kiwi.netlify.app/post/tracksys-export-source-code/</link>
+      <pubDate>Tue, 11 Jun 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://main--test-kiwi.netlify.app/post/tracksys-export-source-code/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Joomla 4.2.7 - Information Disclosure - CVE-2023-23752</title>
+      <link>https://main--test-kiwi.netlify.app/post/joomla-information-disclosure-cve-2023-23752/</link>
+      <pubDate>Sat, 03 Feb 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://main--test-kiwi.netlify.app/post/joomla-information-disclosure-cve-2023-23752/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

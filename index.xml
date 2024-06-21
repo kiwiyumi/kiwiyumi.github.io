@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Kiwiyumi</title>
+    <link>https://main--test-kiwi.netlify.app/</link>
+    <description>Recent content on Kiwiyumi</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 11 Jun 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://main--test-kiwi.netlify.app/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>TrakSYS - CVE-2024-6188 - Direct access to export Source Code</title>
+      <link>https://main--test-kiwi.netlify.app/post/tracksys-export-source-code/</link>
+      <pubDate>Tue, 11 Jun 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://main--test-kiwi.netlify.app/post/tracksys-export-source-code/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Abusing  Apache Misconfiguration - Privilege Escalation</title>
+      <link>https://main--test-kiwi.netlify.app/post/abusing-apache-misconfiguration-privilege-escalation/</link>
+      <pubDate>Fri, 31 May 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://main--test-kiwi.netlify.app/post/abusing-apache-misconfiguration-privilege-escalation/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>NGINX - How to Create a Load Balancer</title>
+      <link>https://main--test-kiwi.netlify.app/post/nginx-how-to-create-a-load-balancer/</link>
+      <pubDate>Fri, 01 Mar 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://main--test-kiwi.netlify.app/post/nginx-how-to-create-a-load-balancer/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Persistence with APT</title>
+      <link>https://main--test-kiwi.netlify.app/post/persistence-with-apt/</link>
+      <pubDate>Wed, 28 Feb 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://main--test-kiwi.netlify.app/post/persistence-with-apt/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Joomla 4.2.7 - Information Disclosure - CVE-2023-23752</title>
+      <link>https://main--test-kiwi.netlify.app/post/joomla-information-disclosure-cve-2023-23752/</link>
+      <pubDate>Sat, 03 Feb 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://main--test-kiwi.netlify.app/post/joomla-information-disclosure-cve-2023-23752/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Dump and Cracking Firefox Passwords</title>
+      <link>https://main--test-kiwi.netlify.app/post/dump-and-crancking-firefox-password/</link>
+      <pubDate>Thu, 01 Feb 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://main--test-kiwi.netlify.app/post/dump-and-crancking-firefox-password/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Privilege Escalation in Systemctl with SUID</title>
+      <link>https://main--test-kiwi.netlify.app/post/privilege-escalation-in-systemctl-with-suid/</link>
+      <pubDate>Tue, 23 Jan 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://main--test-kiwi.netlify.app/post/privilege-escalation-in-systemctl-with-suid/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

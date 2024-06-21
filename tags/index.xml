@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on Kiwiyumi</title>
+    <link>https://main--test-kiwi.netlify.app/tags/</link>
+    <description>Recent content in Tags on Kiwiyumi</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 11 Jun 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://main--test-kiwi.netlify.app/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>CMS</title>
+      <link>https://main--test-kiwi.netlify.app/tags/cms/</link>
+      <pubDate>Tue, 11 Jun 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://main--test-kiwi.netlify.app/tags/cms/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>CVE</title>
+      <link>https://main--test-kiwi.netlify.app/tags/cve/</link>
+      <pubDate>Tue, 11 Jun 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://main--test-kiwi.netlify.app/tags/cve/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Web</title>
+      <link>https://main--test-kiwi.netlify.app/tags/web/</link>
+      <pubDate>Tue, 11 Jun 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://main--test-kiwi.netlify.app/tags/web/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>apache</title>
+      <link>https://main--test-kiwi.netlify.app/tags/apache/</link>
+      <pubDate>Fri, 31 May 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://main--test-kiwi.netlify.app/tags/apache/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>privesc</title>
+      <link>https://main--test-kiwi.netlify.app/tags/privesc/</link>
+      <pubDate>Fri, 31 May 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://main--test-kiwi.netlify.app/tags/privesc/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Web-server</title>
+      <link>https://main--test-kiwi.netlify.app/tags/web-server/</link>
+      <pubDate>Fri, 31 May 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://main--test-kiwi.netlify.app/tags/web-server/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Infra</title>
+      <link>https://main--test-kiwi.netlify.app/tags/infra/</link>
+      <pubDate>Fri, 01 Mar 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://main--test-kiwi.netlify.app/tags/infra/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>persistence</title>
+      <link>https://main--test-kiwi.netlify.app/tags/persistence/</link>
+      <pubDate>Wed, 28 Feb 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://main--test-kiwi.netlify.app/tags/persistence/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>post-exploitation</title>
+      <link>https://main--test-kiwi.netlify.app/tags/post-exploitation/</link>
+      <pubDate>Wed, 28 Feb 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://main--test-kiwi.netlify.app/tags/post-exploitation/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Joomla</title>
+      <link>https://main--test-kiwi.netlify.app/tags/joomla/</link>
+      <pubDate>Sat, 03 Feb 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://main--test-kiwi.netlify.app/tags/joomla/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>firefox</title>
+      <link>https://main--test-kiwi.netlify.app/tags/firefox/</link>
+      <pubDate>Thu, 01 Feb 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://main--test-kiwi.netlify.app/tags/firefox/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

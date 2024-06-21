@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="shortcut icon" href="http://localhost:1313/assets/favicon.ico" type="image/x-icon">
+  <title>NGINX - How to Create a Load Balancer | Kiwiyumi</title>
+  <link rel="stylesheet" href="http://localhost:1313/assets/css/post.css" />
+  <script defer src="http://localhost:1313/assets/js/lbox.js"></script>
+  
+  <link rel="stylesheet" href="http://localhost:1313/assets/css/common.css" />
+  </head>
+  <body>
+    <main>
+      <header>
+  <a class="site-title" href="http://localhost:1313/">Kiwiyumi</a>
+</header>
+
+      <section class="article">
+        <div class="article-header">
+          <h2 class="article-title">NGINX - How to Create a Load Balancer</h2>
+          <small class="date">Fri Mar 1, 2024</small>
+          <div class="tags">
+            
+            <a href="http://localhost:1313/tags/Web-server" class="tag">Web-server</a>
+            
+            <a href="http://localhost:1313/tags/Infra" class="tag">Infra</a>
+            
+          </div>
+        </div>
+        <div class="content"><p>Hello everyone, today we&rsquo;re going to talk about a subject related to server infrastructure, more specifically <strong>Load Balancers</strong>. Have you ever wondered how servers can handle so many requests per second, tens of thousands of users and still keep the server running? In this article we&rsquo;ll learn a little about load balancers and perform a sample configuration.</p>
+<h1 id="what-is-load-balancer">What is Load Balancer?</h1>
+<p>According to the official <strong>NGINX</strong> documentation &ldquo;Load balancing refers to the efficient distribution of incoming network traffic across a group of backend servers, also known as a server farm or server pool.&rdquo;</p>
+<p>In simpler terms, the Load Balancer works from layer 7 of the OSI (Open Systems Interconnection) model. Once a new request arrives at the Load Balancer, it has the task of validating the rules defined and seeing which server can receive the connection, so as to avoid high load and instability problems.</p>
+<h1 id="algorithms-for-load-balancer">Algorithms for Load Balancer</h1>
+<p>Each Load Balancer can have its own characteristics and provide different benefits, so it is important to know which scenario best suits the use of the Load Balancer and which algorithm can provide the best performance. Below is a list of some existing algorithms:</p>
+<ul>
+<li><strong>Round Robin:</strong> Requests are distributed sequentially to each server;</li>
+<li><strong>Least Connections:</strong> The request is sent to the server with the lowest load at the time;</li>
+<li><strong>Least Time:</strong> Sends requests to selected servers based on a calculation, to design a faster response;</li>
+<li><strong>Hash:</strong> Distributes requests based on a predefined key, such as an IP address or URL;</li>
+<li><strong>IP Hash:</strong> The client&rsquo;s IP address is used to determine which server should receive the request;</li>
+<li><strong>Random with Two Choices:</strong> The Load Balancer server will select two servers and send the request to the first one selected (based on the algorithm with the least time).</li>
+</ul>
+<h1 id="what-is-nginx">What is NGINX?</h1>
+<p>NGINX is an open source software for web servers created in October 2004, originally designed to serve HTTP browsers, but nowadays it can be used as a reverse proxy, HTTP load balancer, proxy for emails in IMAP, POP3 and SMTP protocols.</p>
+<h1 id="designed-scenario">Designed Scenario</h1>
+<p>The idea of this article is to enable you to understand how to create a simple load balancer with NGINX and to provide guidance for your future studies. Below is an image of the environment we will be building:</p>
+<p><img src="/assets/images/nginx-load-balancer/2d92160b-07d2-4329-b71b-a27a3aab0e08.png" alt=""></p>
+<p>Our goal is to allow any request made by a user (Client) to be redirected to our Load Balancer and then, depending on availability, to choose the best path (App-01 or App-02).</p>
+<p>The settings for each server are as follows:</p>
+<ul>
+<li><strong>Load Balancer:</strong> Ubuntu server 22.04 with NGINX 1.18.0;</li>
+<li><strong>App-01:</strong> Ubuntu server 20.04 with NGINX 1.18.0;</li>
+<li><strong>App-02:</strong> Ubuntu server 20.04 with NGINX 1.18.0.</li>
+</ul>
+<p>I won&rsquo;t be covering the installation of Ubuntu server in this article, but just download the iso and install it in a virtual machine (or docker if you prefer) to follow along with this article, follow the download link:</p>
+<p><a href="https://ubuntu.com/download/server">https://ubuntu.com/download/server</a></p>
+<h1 id="general-installation">General Installation</h1>
+<p>In this topic we are going to install everything we need for the three servers in question, so let&rsquo;s first update the packages:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo apt update <span style="color:#f92672">&amp;&amp;</span> sudo apt upgrade -y
+</span></span></code></pre></div><p>With the updated packages we can install NGINX with the following command:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo apt install nginx
+</span></span></code></pre></div><p>After you have finished downloading and installing NGINX, you need to initialize the process:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo systemctl start nginx
+</span></span></code></pre></div><p>This is completely optional, but if you want to activate NGINX every time you turn on the machine, just enable it with the following command:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo systemctl enable nginx
+</span></span></code></pre></div><p>To finalize and validate the installation, simply access your server and see the standard NGINX welcome message:</p>
+<p><img src="/assets/images/nginx-load-balancer/084d9276-9fd5-4559-9aa8-f446c5553941.png" alt=""></p>
+<h1 id="configuring-load-balancer">Configuring Load Balancer</h1>
+<p>Now let&rsquo;s start configuring the Load Balancer. To do this, go to the available sites configuration file, the following command will take you to the directory in question:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cd /etc/nginx/sites-available
+</span></span></code></pre></div><p>By default you will only find a file called <strong>default</strong>, let&rsquo;s open it with a text editor (such as nano, vim and the like), delete the existing content and apply the new settings.</p>
+<p>Initially in the file, we have to define the name of our &ldquo;system&rdquo;, the algorithm to be used and which servers we are going to point to, the following code exemplifies the syntax:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>upstream app {
+</span></span><span style="display:flex;"><span>    # Here is the algorithm to be used, if one is not chosen
+</span></span><span style="display:flex;"><span>    # Round Robin is used by default
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    # Here are the servers (IP or DOMAIN) to which requests should be forwarded
+</span></span><span style="display:flex;"><span>    server nginx-app01;
+</span></span><span style="display:flex;"><span>    server nginx-app02;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Next, we need to configure the server options, which port we are listening on, the server name and so on. The following code illustrates a configuration:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>server {
+</span></span><span style="display:flex;"><span>    # Configuring the port
+</span></span><span style="display:flex;"><span>    listen 80 default_server;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    # Setting the server name
+</span></span><span style="display:flex;"><span>    server_name nginxlb;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    location / {
+</span></span><span style="display:flex;"><span>        # Enter the name of the upstream previously defined, in my case app
+</span></span><span style="display:flex;"><span>        proxy_pass http://app;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        # Disable redirection in other directives
+</span></span><span style="display:flex;"><span>        proxy_redirect off;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        # Set the HTTP version, by default 1.0
+</span></span><span style="display:flex;"><span>        proxy_http_version 1.1;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>With each part explained, our configuration file is as follows:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>upstream app {
+</span></span><span style="display:flex;"><span>    server nginx-app01;
+</span></span><span style="display:flex;"><span>    server nginx-app02;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>server {
+</span></span><span style="display:flex;"><span>    listen 80 default_server;
+</span></span><span style="display:flex;"><span>    server_name nginxlb;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    location / {
+</span></span><span style="display:flex;"><span>        proxy_pass http://app;
+</span></span><span style="display:flex;"><span>        proxy_redirect off;
+</span></span><span style="display:flex;"><span>        proxy_http_version 1.1;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Now just save the file and then perform syntax validation with NGINX, using:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo nginx -t
+</span></span></code></pre></div><p>If all goes well, a success message should appear, otherwise look at the error message to solve the problem. Finally, restart the NGINX server:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo systemctl restart nginx
+</span></span></code></pre></div><p>Load Balancer configuration complete!</p>
+<h1 id="configuring-app-01">Configuring App-01</h1>
+<p>Accessing the App-01 server, go to the directory containing the web page files, usually located in <strong>/var/www/html</strong>, delete the existing content and create an index.html file with simple HTML, for example:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#f92672">h1</span>&gt;This is App-01!&lt;/<span style="color:#f92672">h1</span>&gt;
+</span></span></code></pre></div><h1 id="configuring-app-02">Configuring App-02</h1>
+<p>Accessing the App-02 server, go to the directory containing the WEB page files, usually located in <strong>/var/www/html</strong>, delete the existing content and create an index.html file with simple HTML, for example:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#f92672">h1</span>&gt;This is App-02!&lt;/<span style="color:#f92672">h1</span>&gt;
+</span></span></code></pre></div><h1 id="testing">Testing!</h1>
+<p>Now that everything is set up, by accessing the Load Balancer IP/Domain, I can see that we are redirected between the App-01 and App-02 servers at each request.</p>
+<p>The following images show how the servers change with each request:</p>
+<p><img src="/assets/images/nginx-load-balancer/95e8666f-5a7c-4ab4-a3fa-53161e9bb8e4.png" alt="Loading the App-01"></p>
+<p><img src="/assets/images/nginx-load-balancer/57c582d5-38f1-414c-bc63-f2d6f87af2cd.png" alt="Loading the App-02"></p>
+<h1 id="security-tip">Security Tip</h1>
+<p>Whenever a Load Balancer is used in an application, it is important that it always has the same configuration on all servers, otherwise some endpoints that should not be allowed to be accessed (403 Forbidden) may be accessed due to a lack of configuration.</p>
+<h1 id="conclusion">Conclusion</h1>
+<p>In this article it was possible to learn how a Load Balancer works, how to use NGINX for this purpose and how to create an environment from scratch in the simplest way possible. I strongly recommend reading the official NGINX documentation for more information on use and configuration.</p>
+<p>Thanks for reading!</p>
+<h2 id="references">References</h2>
+<ul>
+<li><a href="http://nginx.org/en/docs/http/load_balancing.html">http://nginx.org/en/docs/http/load_balancing.html</a></li>
+<li><a href="https://docs.nginx.com/nginx/admin-guide/load-balancer/http-load-balancer/">https://docs.nginx.com/nginx/admin-guide/load-balancer/http-load-balancer/</a></li>
+</ul></div>
+      </section>
+      <footer>
+  <p>&copy; 2023 - 2024 </p>
+</footer>
+    </main>
+  </body>
+</html>

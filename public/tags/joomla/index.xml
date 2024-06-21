@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Joomla on Kiwiyumi</title>
+    <link>http://localhost:1313/tags/joomla/</link>
+    <description>Recent content in Joomla on Kiwiyumi</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 03 Feb 2024 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/joomla/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Joomla 4.2.7 - Information Disclosure - CVE-2023-23752</title>
+      <link>http://localhost:1313/post/joomla-information-disclosure-cve-2023-23752/</link>
+      <pubDate>Sat, 03 Feb 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/post/joomla-information-disclosure-cve-2023-23752/</guid>
+      <description></description>
+    </item>
+  </channel>
+</rss>

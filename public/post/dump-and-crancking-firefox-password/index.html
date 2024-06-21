@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="shortcut icon" href="http://localhost:1313/assets/favicon.ico" type="image/x-icon">
+  <title>Dump and Cracking Firefox Passwords | Kiwiyumi</title>
+  <link rel="stylesheet" href="http://localhost:1313/assets/css/post.css" />
+  <script defer src="http://localhost:1313/assets/js/lbox.js"></script>
+  
+  <link rel="stylesheet" href="http://localhost:1313/assets/css/common.css" />
+  </head>
+  <body>
+    <main>
+      <header>
+  <a class="site-title" href="http://localhost:1313/">Kiwiyumi</a>
+</header>
+
+      <section class="article">
+        <div class="article-header">
+          <h2 class="article-title">Dump and Cracking Firefox Passwords</h2>
+          <small class="date">Thu Feb 1, 2024</small>
+          <div class="tags">
+            
+            <a href="http://localhost:1313/tags/firefox" class="tag">firefox</a>
+            
+            <a href="http://localhost:1313/tags/post-exploitation" class="tag">post-exploitation</a>
+            
+          </div>
+        </div>
+        <div class="content"><p>Do you trust your browser to store and protect your passwords? Today&rsquo;s article we will understand how an attacker can exploit and obtain sensitive information from your Firefox browser.</p>
+<p>The scenario reproduced in this article is based on the following premise: an attacker with access to the victim&rsquo;s machine starts the post-exploitation process and locates the Firefox files, then using the <strong>dumpzilla</strong> tool we decrypt the passwords.</p>
+<h2 id="standard-paths">Standard paths</h2>
+<p>The firefox browser creates a directory to store information and settings, the paths of which can be different depending on the operating system or the user&rsquo;s choice. Here are the standard paths for each operating system:</p>
+<ul>
+<li>Linux</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>/home/$USER/.mozilla/firefox/xxxx.default
+</span></span></code></pre></div><ul>
+<li>MacOS</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>/Users/$USER/Library/Application Support/Firefox/Profiles/xxxx.default
+</span></span></code></pre></div><ul>
+<li>Windows</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>C:\Users\%USERNAME%\AppData\Roaming\Mozilla\Firefox\Profiles\xxxx.default
+</span></span></code></pre></div><h2 id="dumpzilla-installation---kali-linux">Dumpzilla installation - Kali Linux</h2>
+<p>Installing the tool on the Kali Linux system is simple, just use apt to install the program:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo apt install dumpzilla
+</span></span></code></pre></div><h2 id="dumpzilla-installation---ubuntu">Dumpzilla installation - Ubuntu</h2>
+<h3 id="installing-the-dependencies">Installing the dependencies</h3>
+<p>First you need to install the <strong>lz4</strong> library with pip3, this library is responsible for data compression. Here is the command to install lz4:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>pip3 install logging lz4
+</span></span></code></pre></div><p>Other necessary dependencies are python3 (I believe you already have it on your system), the sqlite3 database and the <strong>libnss3</strong> package.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo apt-get install python3 sqlite3 libnss3*.
+</span></span></code></pre></div><h3 id="dumpzilla-download">Dumpzilla download</h3>
+<p>Downloading the tool is simple, just clone the repository with git:</p>
+<pre tabindex="0"><code>git clone https://github.com/Busindre/dumpzilla.git
+</code></pre><p>After that, just access the directory you created and run the code in python3</p>
+<pre tabindex="0"><code>cd dumpzilla
+python3 dumpzilla.py
+</code></pre><p>If everything is OK, you should receive a screen showing the options for using the tool:</p>
+<p><img src="/assets/images/firefox-dump-passwords/a423071f-ba14-47fd-999d-a0377a50305a.png" alt="It&rsquo;s work!"></p>
+<h2 id="firefox-versions">Firefox versions</h2>
+<p>The process for encrypting and storing passwords in firefox depends on the summer installed, below is a list showing the values:</p>
+<ul>
+<li>Firefox &lt; 32 (key3.db, signons.sqlite)</li>
+<li>Firefox &gt;=32 (key3.db, logins.json)</li>
+<li>Firefox &gt;=58.0.2 (key4.db, logins.json)</li>
+<li>Firefox &gt;=75.0 (sha1 pbkdf2 sha256 aes256 cbc used by key4.db, logins.json)</li>
+</ul>
+<p>Note that the key file stores the encryption key used to encrypt the values in the sqlite/json files. In this way, it is possible to carry out the attack offline, but it is necessary to have the necessary files on hand.</p>
+<h2 id="data-exfiltration">Data Exfiltration</h2>
+<p>Once you have access to the victim&rsquo;s machine, it is recommended that you exfiltrate this information to the attacker&rsquo;s machine. There are several techniques for doing this, apply the one that best fits your scenario and operating system.</p>
+<h2 id="getting-users-and-passwords">Getting users and passwords</h2>
+<p>By default, firefox automatically creates directories with 8 random characters, being letters and numbers, for example, k2efmn13.study, iyna1qt8.code and Tscks1c3.default for example.</p>
+<p>The syntax of the tool for collecting only browser passwords is as follows:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>python3 dumpzilla.py PATH/TO/PROFILES/XXXXXXXX.default/ --Password
+</span></span></code></pre></div><p>In the following image you can see an example, note that it was possible to obtain the email access credentials in plain text:</p>
+<p><img src="/assets/images/firefox-dump-passwords/9ae0ab51-3914-4bd5-84b8-3207ea0da77e.png" alt="Dump password!"></p>
+<p>However, the tool isn&rsquo;t just for collecting passwords, with dumpzilla we can collect much more, for example:</p>
+<ul>
+<li>Cookies + DOM Storage (HTML 5).</li>
+<li>User preferences (Domain permissions, Proxy settings&hellip;).</li>
+<li>Downloads.</li>
+<li>Web forms (Searches, emails, comments..).</li>
+<li>Historial.</li>
+<li>Bookmarks.</li>
+<li>Cache HTML5 Visualization / Extraction (Offline cache).</li>
+<li>visited sites &ldquo;thumbnails&rdquo; Visualization / Extraction .</li>
+<li>Addons / Extensions and used paths or urls.</li>
+<li>Browser saved passwords.</li>
+<li>SSL Certificates added as a exception.</li>
+<li>Session data (Webs, reference URLs and text used in forms).</li>
+<li>Visualize live user surfing, Url used in each tab / window and use of forms.</li>
+</ul>
+<p>To view all this information at once, simply run the tool without specifying an option. In the example above, I&rsquo;ve filtered by &ldquo;&ndash;Passwords&rdquo;, but be aware that you can select what you want to collect.</p>
+<p>More information about the tool is available on the official github:</p>
+<p><a href="https://github.com/Busindre/dumpzilla">https://github.com/Busindre/dumpzilla</a></p>
+<h2 id="conclusions">Conclusions</h2>
+<p>As demonstrated in this post, we can see that storing passwords in any browser can be dangerous for you and easy for an attacker. I strongly advise you to use an <strong>offline</strong> database to store your passwords, for example KeePass and its variants.</p>
+<h2 id="references">References</h2>
+<ul>
+<li><a href="https://support.mozilla.org/en-US/kb/where-are-my-logins-stored">https://support.mozilla.org/en-US/kb/where-are-my-logins-stored</a></li>
+<li><a href="https://null-byte.wonderhowto.com/how-to/hacking-macos-dump-passwords-stored-firefox-browsers-remotely-0185234/">https://null-byte.wonderhowto.com/how-to/hacking-macos-dump-passwords-stored-firefox-browsers-remotely-0185234/</a></li>
+<li><a href="https://kylemistele.medium.com/stealing-saved-browser-passwords-your-new-favorite-post-exploitation-technique-c5e72c86159a">https://kylemistele.medium.com/stealing-saved-browser-passwords-your-new-favorite-post-exploitation-technique-c5e72c86159a</a></li>
+<li><a href="https://github.com/Busindre/dumpzilla">https://github.com/Busindre/dumpzilla</a></li>
+</ul></div>
+      </section>
+      <footer>
+  <p>&copy; 2023 - 2024 </p>
+</footer>
+    </main>
+  </body>
+</html>

@@ -1,8 +1,8 @@
 +++
 author = "kiwiyumi"
-date = "2024-06-11"
+date = "2024-06-21"
 description = "Export source code"
-title = "TrakSYS - CVE-2024-6188 - Direct and unauthenticated access to export Source Code"
+title = "TrakSYS - Direct and unauthenticated access to export Pages funcionality"
 tags = [
     "Web",
     "CVE",
@@ -22,12 +22,12 @@ During my tests it was observed that versions 11.x.x are vulnerable.
 
 ## Affected Endpoint
 
-https://site[.]com/TS/export/pagedefinition?ID={id}
+https://site[.]com/TS/export/contentpage?ID={id}
 
 
 ## Impact
 
-An attacker is able to export the source code of the pages without having any credentials to access the application.
+An attacker is able to export the pages code of the pages without having any credentials to access the application.
 
 
 ## Description
@@ -36,9 +36,8 @@ It was not possible to confirm the presence of mechanisms that check whether the
 
 The following images illustrate successful unauthenticated requests to the affected endpoint:
 
-![](/assets/images/traksys-export-source-code/bc4b5130-8706-48ac-94b2-bb8a5ec868ca.png)
+![](/assets/images/traksys-export-source-code/59bdc23d-92ed-4800-9cdc-728bc211086f.png)
 
-![](/assets/images/traksys-export-source-code/218d3e03-6ea6-4fc7-8586-d5dc6df55275.png)
 
 ## Recommendation
 
@@ -49,13 +48,14 @@ It is strongly recommended that changes be made to the application's existing se
 1. Do the following request replacing the **ID** with a valid id and host with your target:
 
 ```http
-GET /TS/export/pagedefinition?ID={ID} HTTP/1.1
+GET /TS/export/contentpage?ID={ID} HTTP/2
 Host: {HOST}
 
 ```
 
 2. Note that it is possible to export and view the source code.
 
-### Font
+### Fonts
 
+- Similar Vulnerability CVE-2024-6188 [https://kiwiyumi.com/post/tracksys-export-source-code/](https://kiwiyumi.com/post/tracksys-export-source-code/)
 - [https://cheatsheetseries.owasp.org/](https://cheatsheetseries.owasp.org/cheatsheets/Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html)
